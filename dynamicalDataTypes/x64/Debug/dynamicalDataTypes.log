@@ -1,5 +1,4 @@
 ﻿  main.cpp
-D:\my_projects\c++\dynamicalDataTypes\dynamicalDataTypes\SinglyLinkedList.hpp(86,1): warning C4715: 'SinglyList<int>::operator[]': not all control paths return a value
   dynamicalDataTypes.vcxproj -> D:\my_projects\c++\dynamicalDataTypes\x64\Debug\dynamicalDataTypes.exe
   'pwsh.exe' is not recognized as an internal or external command,
   operable program or batch file.

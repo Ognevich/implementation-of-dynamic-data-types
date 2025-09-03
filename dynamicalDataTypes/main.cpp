@@ -1,26 +1,19 @@
 #include <iostream>
 #include "SinglyLinkedList.hpp"
+#include "DoublyLinkedList.hpp"
 #include <vector>
 
 int main() {
 
-	SinglyList<int> list;
+	DoublyList<int> list;
 
-	list.push_back(10);
 	list.push_back(5);
-	list.push_back(7);
+	list.push_back(2);
+	list.push_back(1);
+	list.push_back(8);
 
-	std::vector<int> vector;
+	list.pop_front();
 
-	for (int i = 0; i < list.size(); i++) {
-		std::cout << list[i] << std::endl;
-	}
-	
-	std::cout << "\n";
-	list.pop_back();
-
-	for (int i = 0; i < list.size(); i++) {
-		std::cout << list[i] << std::endl;
-	}
+	std::cout << list.size();
 
 }
