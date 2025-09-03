@@ -8,33 +8,19 @@ int main() {
 
 	list.push_back(10);
 	list.push_back(5);
-	list.push_back(5);
+	list.push_back(7);
 
 	std::vector<int> vector;
 
-	std::cout << list[2] << "\n";
-
-	bool isEmpty = list.empty();
-
-	std::cout << isEmpty << "\n";
-
-
-	vector.push_back(2);
-	vector.push_back(2);
-	vector.push_back(3);
-
-	for (auto& el : vector) {
-		std::cout << el << "\n";
+	for (int i = 0; i < list.size(); i++) {
+		std::cout << list[i] << std::endl;
 	}
+	
+	std::cout << "\n";
+	list.pop_back();
 
-
-	vector.clear();
-
-	for (auto& el : vector) {
-		std::cout << el << "\n";
+	for (int i = 0; i < list.size(); i++) {
+		std::cout << list[i] << std::endl;
 	}
-
-
-
 
 }

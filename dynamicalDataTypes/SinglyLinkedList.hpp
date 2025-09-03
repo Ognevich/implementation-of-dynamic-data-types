@@ -11,6 +11,11 @@ public:
     int size();
     bool empty();
     void clear();
+    void pop_front();
+    void pop_back();
+    void push_front(T data);
+    void insert(T data, int index);
+    void removeAt(int index);
 
     T& operator[](const int index);
 
@@ -40,11 +45,7 @@ inline SinglyList<T>::SinglyList() {
 
 template <typename T>
 inline SinglyList<T>::~SinglyList() {
-    while (head != nullptr) {
-        Node* temp = head;
-        head = head->pNext;
-        delete temp;
-    }
+    clear();
 }
 
 template<typename T>
@@ -91,9 +92,79 @@ inline bool SinglyList<T>::empty() {
 
 template <typename T>
 inline void SinglyList<T>::clear() {
-    if (this->head == nullptr) {
+    while (Size)
+        pop_front();
+
+}
+
+template <typename T>
+inline void SinglyList<T>::pop_front() {
+    Node* temp = head;
+
+    head = head->pNext;
+
+    delete temp;
+
+    Size--;
+}
+
+template <typename T>
+inline void SinglyList<T>::push_front(T data) {
+
+    Node* head = new Node(data, this->head);
+    Size++;
+
+}
+
+template <typename T>
+inline void SinglyList<T>::insert(T data, int index) {
+    if (index == 0)
+    {
+        push_front(data);
+    }
+    else {
+        Node* previous = this->head;
+
+        for (int i = 0; i < index - 1; i++) {
+            previous = previous->pNext;
+        }
+        Node* newNode = new Node(data, previous->pNext);
+        previous->pNext = newNode;
+
+        Size++;
+    }
+
+}
+
+template <typename T>
+inline void SinglyList<T>::removeAt(int index) {
+    if (index < 0 || index >= Size) {
+        throw std::out_of_range("Index out of range");
+    }
+
+    if (index == 0) {
+        pop_front();
         return;
     }
+
+    Node* previous = this->head;
+   
+    for (int i = 0; i < index - 1; i++) {
+        previous = previous->pNext;
+    }
+
+    Node* current = previous->pNext;   
+    previous->pNext = current->pNext; 
+
+    delete current;
+    Size--;
+}
+
+template <typename T>
+inline void SinglyList<T>::pop_back() {
+
+    removeAt(Size - 1);
+
 }
 
 #endif
