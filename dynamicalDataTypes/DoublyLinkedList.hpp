@@ -9,9 +9,15 @@ public:
 	~DoublyList();
 
 	void push_back(const T value);
+	void push_front(const T value);
 	int size();
 	bool empty();
 	void pop_front();
+	void pop_back();
+	void insert(T value, int index);
+
+	T& operator[](const int index);
+
 
 private:
 	class Node {
@@ -93,6 +99,103 @@ inline void DoublyList<T>::pop_front() {
 	delete temp;
 	Size--;
 }
+
+template <typename T>
+inline T& DoublyList<T>::operator[](const int index) {
+	if (index < 0 || index >= Size) {
+		throw std::out_of_range("Index out of range");
+	}
+
+	int tempSize = 0;
+	Node* current = this->head;
+
+	while (current != nullptr) {
+		if (tempSize == index) {
+			return current->data;
+		}
+		tempSize++;
+		current = current->pNext;
+	}
+	throw std::out_of_range("Index not found");
+}
+
+template <typename T>
+inline void DoublyList<T>::pop_back() {
+	if (Size == 0) {
+		throw std::runtime_error("List is empty, cannot pop_back");
+	}
+
+	if (Size == 1) {
+		pop_front();
+		return;
+	}
+
+	Node* deleteElem = tail;
+	tail = tail->pPrev;
+	tail->pNext = nullptr;
+
+	delete deleteElem;
+	Size--;
+}
+
+template <typename T>
+inline void DoublyList<T>::push_front(const T value) {
+	if (head == nullptr)
+	{
+		push_back(value);
+		return;
+	}
+
+	Node* newNode = new Node(value, nullptr, head);
+	head->pPrev = newNode;
+	head = newNode;
+
+
+	Size++;
+}
+
+template <typename T>
+inline void DoublyList<T>::insert(T value, int index) {
+	if (index < 0 || index > Size) {
+		throw std::out_of_range("Index out of range");
+	}
+
+	if (index == 0) {
+		push_front(value);
+		return;
+	}
+
+	if (index == Size) {
+		push_back(value);
+		return;
+	}
+
+	int center = Size / 2;
+
+	if (index <= center) {
+		Node* current = head;
+		for (int i = 0; i < index; i++) {
+			current = current->pNext;
+		}
+
+		Node* newNode = new Node(value, current->pPrev, current);
+		current->pPrev->pNext = newNode;
+		current->pPrev = newNode;
+	}
+	else {
+		Node* current = tail;
+		for (int i = Size - 1; i > index; i--) {
+			current = current->pPrev;
+		}
+
+		Node* newNode = new Node(value, current->pPrev, current);
+		current->pPrev->pNext = newNode;
+		current->pPrev = newNode;
+	}
+
+	Size++;
+}
+
 #endif
 
 
