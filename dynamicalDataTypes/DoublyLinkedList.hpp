@@ -14,7 +14,9 @@ public:
 	bool empty();
 	void pop_front();
 	void pop_back();
+	void clear();
 	void insert(T value, int index);
+	void removeAt(int index);
 
 	T& operator[](const int index);
 
@@ -52,6 +54,7 @@ inline DoublyList<T>::DoublyList()
 template<typename T>
 inline DoublyList<T>::~DoublyList()
 {
+	clear();
 }
 
 template <typename T>
@@ -196,6 +199,50 @@ inline void DoublyList<T>::insert(T value, int index) {
 	Size++;
 }
 
+template <typename T>
+inline void DoublyList<T>::removeAt(int index) {
+	if (index < 0 || index >= Size) {
+		throw std::out_of_range("Index out of range");
+	}
+
+	if (index == 0) {
+		pop_front();
+		return;
+	}
+	if (index == Size - 1) {
+		pop_back();
+		return;
+	}
+
+	int center = Size / 2;
+
+	Node* deleteElem = nullptr;
+
+	if (index <= center) {
+		deleteElem = head;
+		for (int i = 0; i < index; i++) {
+			deleteElem = deleteElem->pNext;
+		}
+	}
+	else {
+		deleteElem = tail;
+		for (int i = Size - 1; i > index; i--) {
+			deleteElem = deleteElem->pPrev;
+		}
+	}
+	deleteElem->pPrev->pNext = deleteElem->pNext;
+	deleteElem->pNext->pPrev = deleteElem->pPrev;
+
+	delete deleteElem;
+	Size--;
+}
+
+template <typename T>
+inline void DoublyList<T>::clear() {
+
+	while (Size)
+		pop_front();
+}
 #endif
 
 
